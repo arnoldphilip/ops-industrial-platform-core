@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Login } from './features/Login';
 import { useEffect } from 'react';
 import { useUIStore } from './store';
@@ -42,31 +43,39 @@ function App() {
           </ProtectedRoute>
         }>
           <Route path="/" element={
-            <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
-              <Dashboard />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
+                <Dashboard />
+              </Suspense>
+            </ErrorBoundary>
           } />
 
           <Route path="/analytics" element={
             <ProtectedRoute allowedRoles={['Supervisor', 'Admin']}>
-              <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
-                <Analytics />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
+                  <Analytics />
+                </Suspense>
+              </ErrorBoundary>
             </ProtectedRoute>
           } />
 
           <Route path="/team" element={
             <ProtectedRoute allowedRoles={['Supervisor', 'Admin']}>
-              <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
-                <Team />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
+                  <Team />
+                </Suspense>
+              </ErrorBoundary>
             </ProtectedRoute>
           } />
 
           <Route path="/settings" element={
-            <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
-              <Settings />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<div className="p-8 h-full animate-pulse bg-secondary rounded-xl" />}>
+                <Settings />
+              </Suspense>
+            </ErrorBoundary>
           } />
 
           <Route path="/unauthorized" element={<Unauthorized />} />

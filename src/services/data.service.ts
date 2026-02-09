@@ -22,5 +22,25 @@ export const DataService = {
         { id: '2', title: 'Downtime', value: 12.5, unit: 'hrs', trend: -1.5, status: 'warning' },
         { id: '3', title: 'Tasks Completed', value: 1240, trend: 12, status: 'neutral' },
         { id: '4', title: 'Pending Escalations', value: 8, trend: -3, status: 'error' },
-    ]
+    ],
+
+    // New method for real-time delta simulation
+    simulateUpdate: (kpis: KPIData[]): KPIData[] => {
+        return kpis.map(kpi => {
+            const delta = (Math.random() - 0.5) * 2;
+            let newValue = typeof kpi.value === 'number' ? kpi.value + delta : kpi.value;
+
+            // Keep values realistic
+            if (typeof newValue === 'number') {
+                if (kpi.title === 'SLA Compliance') newValue = Math.min(100, Math.max(85, newValue));
+                if (kpi.title === 'Downtime') newValue = Math.max(0, newValue);
+            }
+
+            return {
+                ...kpi,
+                value: typeof newValue === 'number' ? Number(newValue.toFixed(1)) : newValue,
+                trend: Number((kpi.trend + (Math.random() - 0.5)).toFixed(1))
+            };
+        });
+    }
 };
