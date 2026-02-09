@@ -1,5 +1,5 @@
 import { memo, useMemo, useState } from 'react';
-import { FixedSizeList as List } from 'react-window';
+import { FixedSizeList } from 'react-window';
 import type { TaskRow } from '../types';
 import { clsx } from 'clsx';
 import { ArrowUpDown, ChevronUp, ChevronDown, Pin } from 'lucide-react';
@@ -127,7 +127,7 @@ export const VirtualizedTable = memo(({ data, height }: VirtualizedTableProps) =
                 <div className="w-32">Progress</div>
             </div>
             <div className="flex-1 min-h-0">
-                <List
+                <FixedSizeList
                     height={height - 100} // Adjust for header and footer
                     itemCount={sortedData.length}
                     itemSize={56}
@@ -135,7 +135,7 @@ export const VirtualizedTable = memo(({ data, height }: VirtualizedTableProps) =
                     className="scrollbar-hide"
                 >
                     {Row}
-                </List>
+                </FixedSizeList>
             </div>
             <div className="px-4 py-2 border-t border-border bg-secondary/20 text-xs text-muted-foreground flex justify-between shrink-0">
                 <span>Showing {sortedData.length.toLocaleString()} records • Sorted by {sortConfig.key}</span>
